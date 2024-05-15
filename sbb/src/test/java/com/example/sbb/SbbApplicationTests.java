@@ -16,6 +16,7 @@ import com.example.sbb.answer.AnswerRepository;
 import com.example.sbb.question.Question;
 import com.example.sbb.question.QuestionRepository;
 import com.example.sbb.question.QuestionService;
+import com.example.sbb.user.UserService;
 
 import jakarta.transaction.Transactional;
 
@@ -31,6 +32,8 @@ class SbbApplicationTests {
 	@Autowired
 	private QuestionService questionService;
 	
+	@Autowired
+	private UserService userService;
 //	@Test
 //	void testJpa() {
 //		Question q1 = new Question();
@@ -136,12 +139,12 @@ class SbbApplicationTests {
 //		assertEquals("네 자동으로 생성됩니다.", answerList.get(0).getContent());
 //	}
 	
-	@Test
-	void testJpa() {
-		for (int i = 1; i <= 300; i++) {
-			String subject = String.format("테스트 데이터입니다:[%03d]", i);
-			String content = "내용 없음";
-			this.questionService.create(subject, content);
-		}
-	}
+//	@Test
+//	void testJpa() {
+//		for (int i = 1; i <= 300; i++) {
+//			String subject = String.format("테스트 데이터입니다:[%03d]", i);
+//			String content = "내용 없음";
+//			this.questionService.create(subject, content);
+//		}
+//	}
 }
