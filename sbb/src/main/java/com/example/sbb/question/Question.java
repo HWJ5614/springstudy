@@ -45,4 +45,6 @@ public class Question {
     
     @ManyToMany
     Set<SiteUser> voter;
+    
+    private String fileUrl; // 파일 URL 필드 추가
 }

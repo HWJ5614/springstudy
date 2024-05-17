@@ -34,6 +34,7 @@ class SbbApplicationTests {
 	
 	@Autowired
 	private UserService userService;
+	
 //	@Test
 //	void testJpa() {
 //		Question q1 = new Question();
