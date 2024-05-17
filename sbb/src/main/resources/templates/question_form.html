@@ -4,9 +4,6 @@
         <form th:object="${questionForm}" method="post" enctype="multipart/form-data">
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             <div th:replace="~{form_errors :: formErrorsFragment}"></div>
-            <div class="alert alert-danger" role="alert" th:if="${#fields.hasAnyErrors()}">
-                <div th:each="err : ${#fields.allErrors()}" th:text="${err}"></div>
-            </div>
             <!-- 파일 업로드 크기 초과 경고 메시지 추가 -->
             <div class="alert alert-danger" role="alert" th:if="${message}">
                 <p th:text="${message}"></p>
