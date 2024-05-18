@@ -26,6 +26,10 @@ import com.example.sbb.user.UserService;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import net.bramp.ffmpeg.FFmpeg;
+import net.bramp.ffmpeg.FFmpegExecutor;
+import net.bramp.ffmpeg.FFprobe;
+import net.bramp.ffmpeg.builder.FFmpegBuilder;
 
 @RequestMapping("/question")
 @RequiredArgsConstructor
@@ -96,6 +100,28 @@ public class QuestionController {
         this.questionService.create(question); // 수정된 Question 객체 저장
 
         return "redirect:/question/list";
+    }
+    
+ // FFmpeg를 사용하여 비디오 크기 조절하는 메서드
+    private File resizeVideo(File inputFile) throws IOException {
+        FFmpeg ffmpeg = new FFmpeg("/path/to/ffmpeg");  // FFmpeg 바이너리 경로 설정
+        FFprobe ffprobe = new FFprobe("/path/to/ffprobe"); // FFprobe 바이너리 경로 설정
+
+        String outputFilename = "resized_" + inputFile.getName();
+        File outputFile = new File(System.getProperty("java.io.tmpdir"), outputFilename);
+
+        FFmpegBuilder builder = new FFmpegBuilder()
+            .setInput(inputFile.getAbsolutePath())     // 입력 파일 경로
+            .overrideOutputFiles(true)                 // 기존 파일 덮어쓰기
+            .addOutput(outputFile.getAbsolutePath())   // 출력 파일 경로
+            .setVideoResolution(1280, 720)             // 비디오 해상도 조절
+            .setVideoCodec("libx264")                  // 비디오 코덱 설정
+            .done();
+
+        FFmpegExecutor executor = new FFmpegExecutor(ffmpeg, ffprobe);
+        executor.createJob(builder).run();
+
+        return outputFile;
     }
 
     @PreAuthorize("isAuthenticated()")
